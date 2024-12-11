@@ -2,8 +2,18 @@ import Lottie from "lottie-react";
 import registerAnimation from "../../assets/lotte/Animation - 1733839892103.json";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/Context";
+import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
-  const { createUser, updateUserProfile, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const {
+    createUser,
+    updateUserProfile,
+    setUser,
+    error,
+    setError,
+    loading,
+    setLoading,
+  } = useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -12,6 +22,27 @@ const Register = () => {
     const name = form.name.value;
     const photo = form.photo.value;
 
+    setLoading(true);
+    const upperCase = /[A-Z]/;
+    if (!upperCase.test(password)) {
+      setError("Password must be at least one uppercase letter");
+      setLoading(false);
+      return;
+    }
+
+    const lowerCase = /[a-z]/;
+    if (!lowerCase.test(password)) {
+      setError("Password must be at least one lowercase letter");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 character");
+      setLoading(false);
+      return;
+    }
+
     const profile = {
       displayName: name,
       photoURL: photo,
@@ -19,8 +50,9 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
-        setUser(result.user)
-        updateUserProfile(profile)
+        setUser(result.user);
+        updateUserProfile(profile);
+        navigate("/");
       })
       .catch((err) => {
         console.log("ERROR", err);
@@ -83,9 +115,19 @@ const Register = () => {
                 required
               />
             </div>
+            <p className="text-red-600">{error}</p>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Register</button>
+              <button className="btn btn-primary">
+                {loading ? (
+                  <span className="loading loading-spinner loading-sm"></span>
+                ) : (
+                  " Register"
+                )}
+              </button>
             </div>
+          <div>
+              <p>Already have an account? <Link className="text-red-600" to='/signIn'>Sign In</Link></p>
+          </div>
           </form>
         </div>
       </div>

@@ -3,6 +3,7 @@ import signInAnimation from "../../assets/lotte/Animation - 1733839892103.json";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/Context";
 import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const { signInUser, setUser, signInWithGoogle } = useContext(AuthContext);
@@ -72,6 +73,9 @@ const SignIn = () => {
            <i> <FcGoogle size={25} /></i>
             <span className="font-bold">Sign with google</span>
             </div>
+            <div>
+              <p>Create account? <Link className="text-red-600" to='/register'>Register</Link></p>
+          </div>
           </form>
         </div>
       </div>

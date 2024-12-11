@@ -15,6 +15,7 @@ import {
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('')
   const googleProvider = new GoogleAuthProvider();
 
   const createUser = (email, password) => {
@@ -63,7 +64,9 @@ const AuthProvider = ({ children }) => {
     signInUser,
     signOutUser,
     signInWithGoogle,
-    updateUserProfile
+    updateUserProfile,
+    error,
+    setError
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
