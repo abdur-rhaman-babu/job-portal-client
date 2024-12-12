@@ -1,9 +1,10 @@
+import HotJobs from "../../components/HotJobs/HotJobs";
 
 
 const Home = () => {
     return (
         <div>
-            <h1>This is home</h1>
+            <HotJobs/>
         </div>
     );
 };
