@@ -1,10 +1,9 @@
-import PropTypes from "prop-types";
 import { MdOutlineLocationOn } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
-const HotJobCard = ({ job }) => {
+const JobDetails = () => {
+  const job = useLoaderData();
   const {
-    _id,
     title,
     location,
     jobType,
@@ -13,6 +12,7 @@ const HotJobCard = ({ job }) => {
     requirements,
     company_logo,
   } = job;
+  // console.log(job);  
   return (
     <div className="card card-compact bg-base-100 shadow-xl">
       <div className="flex items-center gap-2 m-2">
@@ -40,14 +40,11 @@ const HotJobCard = ({ job }) => {
         </div>
         <div className="card-actions justify-end items-center">
             <p>Salary: ${salaryRange.min} - {salaryRange.max} {salaryRange.currency}</p>
-          <Link to={`/jobs/${_id}`}><button className="btn btn-primary">Apply</button></Link>
+          <button className="btn btn-primary">Apply</button>
         </div>
       </div>
     </div>
   );
 };
 
-HotJobCard.propTypes = {
-  job: PropTypes.object.isRequired,
-};
-export default HotJobCard;
+export default JobDetails;

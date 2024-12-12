@@ -3,11 +3,22 @@ import signInAnimation from "../../assets/lotte/Animation - 1733839892103.json";
 import { useContext } from "react";
 import { AuthContext } from "../../Context/Context";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
 const SignIn = () => {
-  const { signInUser, setUser, signInWithGoogle,  showPassword, setShowPassword } = useContext(AuthContext);
+  const {
+    signInUser,
+    setUser,
+    signInWithGoogle,
+    showPassword,
+    setShowPassword,
+  } = useContext(AuthContext);
+
+  const navigate = useNavigate()
+  const location = useLocation()
+  // console.log(location)
+  const from = location.state || '/'
   const handleSignIn = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -15,24 +26,26 @@ const SignIn = () => {
     const password = form.password.value;
     signInUser(email, password)
       .then((result) => {
-        console.log(result.user);
-        setUser(result.user)
+        // console.log(result.user);
+        navigate(from)
+        setUser(result.user);
       })
       .catch((err) => {
         console.log("ERROR", err);
       });
   };
 
-  const handleSignInWithGoogle = () =>{
+  const handleSignInWithGoogle = () => {
     signInWithGoogle()
-    .then(result=>{
-      console.log(result.user)
-      setUser(result.user)
-    })
-    .catch(err=>{
-      console.log('ERROR', err)
-    })
-  }
+      .then((result) => {
+        // console.log(result.user);
+        navigate(from)
+        setUser(result.user);
+      })
+      .catch((err) => {
+        console.log("ERROR", err);
+      });
+  };
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -72,17 +85,28 @@ const SignIn = () => {
                 {showPassword ? <IoEye /> : <IoEyeOff />}
               </i>
             </div>
-            
+
             <div className="form-control mt-6">
               <button className="btn btn-primary">Sign In</button>
             </div>
-          <div onClick={handleSignInWithGoogle} className="border flex items-center gap-2 justify-center cursor-pointer p-2 rounded-lg">
-           <i> <FcGoogle size={25} /></i>
-            <span className="font-bold">Sign with google</span>
+            <div
+              onClick={handleSignInWithGoogle}
+              className="border flex items-center gap-2 justify-center cursor-pointer p-2 rounded-lg"
+            >
+              <i>
+                {" "}
+                <FcGoogle size={25} />
+              </i>
+              <span className="font-bold">Sign with google</span>
             </div>
             <div>
-              <p>Create account? <Link className="text-red-600" to='/register'>Register</Link></p>
-          </div>
+              <p>
+                Create account?{" "}
+                <Link className="text-red-600" to="/register">
+                  Register
+                </Link>
+              </p>
+            </div>
           </form>
         </div>
       </div>
