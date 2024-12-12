@@ -3,7 +3,9 @@ import registerAnimation from "../../assets/lotte/Animation - 1733839892103.json
 import { useContext } from "react";
 import { AuthContext } from "../../Context/Context";
 import { Link, useNavigate } from "react-router-dom";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 const Register = () => {
+  const { showPassword, setShowPassword } = useContext(AuthContext);
   const navigate = useNavigate();
   const {
     createUser,
@@ -103,17 +105,23 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="form-control">
+            <div className="form-control relative">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="password"
                 className="input input-bordered"
                 required
               />
+              <i
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-12 right-3 mt-1 cursor-pointer"
+              >
+                {showPassword ? <IoEye /> : <IoEyeOff />}
+              </i>
             </div>
             <p className="text-red-600">{error}</p>
             <div className="form-control mt-6">
@@ -125,9 +133,14 @@ const Register = () => {
                 )}
               </button>
             </div>
-          <div>
-              <p>Already have an account? <Link className="text-red-600" to='/signIn'>Sign In</Link></p>
-          </div>
+            <div>
+              <p>
+                Already have an account?{" "}
+                <Link className="text-red-600" to="/signIn">
+                  Sign In
+                </Link>
+              </p>
+            </div>
           </form>
         </div>
       </div>

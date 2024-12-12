@@ -4,9 +4,10 @@ import { useContext } from "react";
 import { AuthContext } from "../../Context/Context";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { IoEye, IoEyeOff } from "react-icons/io5";
 
 const SignIn = () => {
-  const { signInUser, setUser, signInWithGoogle } = useContext(AuthContext);
+  const { signInUser, setUser, signInWithGoogle,  showPassword, setShowPassword } = useContext(AuthContext);
   const handleSignIn = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -53,17 +54,23 @@ const SignIn = () => {
                 required
               />
             </div>
-            <div className="form-control">
+            <div className="form-control relative">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="password"
                 className="input input-bordered"
                 required
               />
+              <i
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-12 right-3 mt-1 cursor-pointer"
+              >
+                {showPassword ? <IoEye /> : <IoEyeOff />}
+              </i>
             </div>
             
             <div className="form-control mt-6">
