@@ -1,9 +1,10 @@
 import { MdOutlineLocationOn } from "react-icons/md";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const JobDetails = () => {
   const job = useLoaderData();
   const {
+    _id,
     title,
     location,
     jobType,
@@ -40,7 +41,7 @@ const JobDetails = () => {
         </div>
         <div className="card-actions justify-end items-center">
             <p>Salary: ${salaryRange.min} - {salaryRange.max} {salaryRange.currency}</p>
-          <button className="btn btn-primary">Apply</button>
+          <Link to={`/jobApply/${_id}`}><button className="btn btn-primary">Apply Now</button></Link>
         </div>
       </div>
     </div>
