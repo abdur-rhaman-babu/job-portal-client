@@ -2,8 +2,15 @@ const AddJob = () => {
   const handleAddJob = (e) => {
     e.preventDefault();
 
+    const formData = new FormData(e.target);
+    const initialData = Object.fromEntries(formData.entries());
+    const { min, max, currency, ...newJob } = initialData;
+    newJob.salaryRange = {min, max, currency}
+    newJob.requirements = newJob.requirements.split('\n')
+    newJob.responsibilities = newJob.responsibilities.split('\n')
+    console.log(newJob)
   };
-  
+
   return (
     <form onSubmit={handleAddJob} className="card-body">
       <div className="form-control">
@@ -105,12 +112,12 @@ const AddJob = () => {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Requirments</span>
+          <span className="label-text">Requirements</span>
         </label>
         <textarea
           className="textarea textarea-bordered"
-          placeholder="requirment"
-          name="requirment"
+          placeholder="requirements"
+          name="requirements"
         ></textarea>
       </div>
       <div className="form-control">
