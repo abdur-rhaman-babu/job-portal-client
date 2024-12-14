@@ -9,6 +9,21 @@ const AddJob = () => {
     newJob.requirements = newJob.requirements.split('\n')
     newJob.responsibilities = newJob.responsibilities.split('\n')
     console.log(newJob)
+
+    fetch('http://localhost:3000/jobs',{
+        method:'POST',
+        headers:{
+            'content-type': 'application/json'
+        },
+        body:JSON.stringify(newJob)
+    })
+    .then(res=> res.json())
+    .then(data=> {
+        console.log(data)
+        if(data.insertedId){
+            alert('data successfully added')
+        }
+    })
   };
 
   return (
@@ -41,7 +56,7 @@ const AddJob = () => {
         <label className="label">
           <span className="label-text">Job Type</span>
         </label>
-        <select className="select select-ghost w-full max-w-xs" name="job_type">
+        <select className="select select-ghost w-full max-w-xs" name="jobType">
           <option disabled selected>
             Pick a job type
           </option>
@@ -56,7 +71,7 @@ const AddJob = () => {
         </label>
         <select
           className="select select-ghost w-full max-w-xs"
-          name="job_category"
+          name="category"
         >
           <option disabled selected>
             Pick a job category

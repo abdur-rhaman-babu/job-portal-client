@@ -3,7 +3,7 @@ import Navbar from "../../pages/shared/Navbar/Navbar";
 
 const MainLayout = () => {
   const navigation = useNavigation();
-  console.log(navigation);
+  // console.log(navigation);
   return (
     <div>
       <Navbar />
