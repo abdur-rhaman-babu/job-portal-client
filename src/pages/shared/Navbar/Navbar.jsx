@@ -22,6 +22,9 @@ const Navbar = () => {
       <li>
         <NavLink to="/addJob">Add Job</NavLink>
       </li>
+      <li>
+        <NavLink to="/myPostedJob">My Posted Job</NavLink>
+      </li>
       {user ? (
         <div>
           <button onClick={handleSignOut} className="border-2 p-2 rounded-lg">
