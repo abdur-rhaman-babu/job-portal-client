@@ -5,6 +5,7 @@ import { AuthContext } from "../../Context/Context";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IoEye, IoEyeOff } from "react-icons/io5";
+import axios from "axios";
 
 const SignIn = () => {
   const {
@@ -15,10 +16,10 @@ const SignIn = () => {
     setShowPassword,
   } = useContext(AuthContext);
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   // console.log(location)
-  const from = location.state || '/'
+  const from = location.state || "/";
   const handleSignIn = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -26,8 +27,11 @@ const SignIn = () => {
     const password = form.password.value;
     signInUser(email, password)
       .then((result) => {
-        // console.log(result.user);
-        navigate(from)
+        const user = { email: email };
+        axios.post("http://localhost:3000/jwt", user).then((data) => {
+          console.log(data);
+        });
+        navigate(from);
         setUser(result.user);
       })
       .catch((err) => {
@@ -39,7 +43,7 @@ const SignIn = () => {
     signInWithGoogle()
       .then((result) => {
         // console.log(result.user);
-        navigate(from)
+        navigate(from);
         setUser(result.user);
       })
       .catch((err) => {

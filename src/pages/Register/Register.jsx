@@ -58,6 +58,7 @@ const Register = () => {
       })
       .catch((err) => {
         console.log("ERROR", err);
+        setLoading(false)
       });
   };
   return (
