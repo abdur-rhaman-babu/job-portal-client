@@ -44,7 +44,13 @@ const SignIn = () => {
   const handleSignInWithGoogle = () => {
     signInWithGoogle()
       .then((result) => {
-        // console.log(result.user);
+        // console.log(result.user.email);
+        const user = { email: result?.user?.email };
+        axios
+          .post("http://localhost:3000/jwt", user, { withCredentials: true })
+          .then((res) => {
+            console.log(res.data);
+          });
         navigate(from);
         setUser(result.user);
       })
